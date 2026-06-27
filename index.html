@@ -247,6 +247,20 @@
                     color: #1a2a4a;
                 }
 
+        /* ===== 角色筛选折叠箭头 ===== */
+        .role-toggle-arrow {
+            display: none;
+            font-size: 12px;
+            margin-left: auto;
+            transition: transform 0.25s ease;
+            color: #6a7a9a;
+        }
+
+        .role-filter-header {
+            cursor: default;
+            user-select: none;
+        }
+
         /* ===== 角色选择 ===== */
         .roles {
             display: flex;
@@ -584,6 +598,27 @@
                 font-size: 14px;
                 padding: 4px 12px 4px 8px;
             }
+
+            /* 角色筛选折叠 */
+            .role-toggle-arrow {
+                display: inline-block;
+            }
+
+            .role-filter-header {
+                cursor: pointer;
+            }
+
+            .roles {
+                display: none;
+            }
+
+                .roles.open {
+                    display: flex;
+                }
+
+            .role-toggle-arrow.open {
+                transform: rotate(180deg);
+            }
         }
 
         @media (max-width: 500px) {
@@ -741,11 +776,13 @@
 
         <!-- ===== 角色筛选卡 ===== -->
         <div class="card">
-            <h3>角色筛选
+            <h3 id="roleFilterHeader" class="role-filter-header">
+                角色筛选
                 <span class="role" id="btnSkinSelect">
                     🎯 仅选择有皮肤的角色
                     <span class="skin-badge" id="skinBadge">0</span>
                 </span>
+                <span class="role-toggle-arrow" id="roleToggleArrow">▼</span>
             </h3>
             <div class="roles" id="roles"></div>
         </div>
@@ -1293,7 +1330,8 @@
             }
         });
 
-        btnSkinSelect.addEventListener('click', function () {
+        btnSkinSelect.addEventListener('click', function (e) {
+            e.stopPropagation();
             model.forEach((r, i) => {
                 const cb = document.getElementById("r" + i);
                 if (cb) {
@@ -1301,6 +1339,21 @@
                 }
             });
             update();
+        });
+
+        // 移动端角色筛选折叠/展开
+        const roleFilterHeader = document.getElementById('roleFilterHeader');
+        const roleToggleArrow = document.getElementById('roleToggleArrow');
+        const rolesContainer = document.getElementById('roles');
+
+        function isMobile() {
+            return window.innerWidth < 700;
+        }
+
+        roleFilterHeader.addEventListener('click', function () {
+            if (!isMobile()) return;
+            const open = rolesContainer.classList.toggle('open');
+            roleToggleArrow.classList.toggle('open', open);
         });
 
         // 窗口尺寸变化时重新渲染，保证移动端两行切换
