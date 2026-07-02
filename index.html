@@ -1080,6 +1080,156 @@
                     margin: 0 -12px;
                 }
             }
+
+            /* 补礼物计算器 */
+            .gift-calc-card .calc-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 16px 24px;
+                align-items: flex-end;
+                margin-bottom: 18px;
+            }
+            .gift-calc-card .calc-field {
+                display: flex;
+                flex-direction: column;
+                gap: 4px;
+                min-width: 140px;
+            }
+            .gift-calc-card .calc-field label {
+                font-size: 13px;
+                font-weight: 500;
+                color: #5a6a8a;
+                letter-spacing: 0.01em;
+            }
+            .gift-calc-card .calc-field select,
+            .gift-calc-card .calc-field input {
+                padding: 8px 14px;
+                border: 1px solid #d8dce6;
+                border-radius: 8px;
+                font-size: 15px;
+                font-family: inherit;
+                background: #f8f9fc;
+                color: #1a2744;
+                outline: none;
+                transition: border-color 0.15s, box-shadow 0.15s;
+                min-width: 120px;
+            }
+            .gift-calc-card .calc-field select:focus,
+            .gift-calc-card .calc-field input:focus {
+                border-color: #4a7acc;
+                box-shadow: 0 0 0 3px rgba(74, 122, 204, 0.1);
+            }
+            .gift-calc-card .calc-result {
+                background: #f0f4fd;
+                border-radius: 12px;
+                padding: 18px 22px;
+                margin-top: 6px;
+            }
+            .gift-calc-card .calc-result .result-main {
+                font-size: 16px;
+                font-weight: 600;
+                color: #1a2744;
+                margin-bottom: 8px;
+            }
+            .gift-calc-card .calc-result .result-sub {
+                font-size: 13px;
+                color: #5a6a8a;
+                line-height: 1.6;
+            }
+            .gift-calc-card .calc-note {
+                font-size: 12px;
+                color: #8a8ea8;
+                margin-top: 10px;
+                line-height: 1.6;
+            }
+            .gift-calc-card .calc-note span {
+                background: #fff3e0;
+                color: #e65100;
+                padding: 1px 8px;
+                border-radius: 4px;
+                font-weight: 500;
+            }
+            .gift-calc-card .result-table {
+                width: 100%;
+                border-collapse: collapse;
+                font-size: 14px;
+                margin-top: 10px;
+            }
+            .gift-calc-card .result-table th {
+                text-align: left;
+                font-weight: 500;
+                color: #5a6a8a;
+                padding: 4px 8px;
+                font-size: 13px;
+                border-bottom: 1px solid #d8dce6;
+            }
+            .gift-calc-card .result-table td {
+                padding: 6px 8px;
+                color: #1a2744;
+                font-weight: 500;
+            }
+            .gift-calc-card .result-table .cost-col {
+                color: #c62828;
+                font-weight: 600;
+            }
+            .gift-calc-card .result-table .optimal-row {
+                background: #e8f5e9;
+            }
+            .gift-calc-card .result-table .optimal-row td {
+                font-weight: 700;
+                color: #1b5e20;
+            }
+        }
+
+        /* 补礼物计算器 暗色模式 */
+        @media (prefers-color-scheme: dark) {
+            .gift-calc-card .calc-field label {
+                color: #a0a8c0;
+            }
+            .gift-calc-card .calc-field select,
+            .gift-calc-card .calc-field input {
+                background: #2a2d3e;
+                border-color: #3a3d50;
+                color: #c8cce0;
+            }
+            .gift-calc-card .calc-field select:focus,
+            .gift-calc-card .calc-field input:focus {
+                border-color: #5a8adc;
+                box-shadow: 0 0 0 3px rgba(90, 138, 220, 0.15);
+            }
+            .gift-calc-card .calc-result {
+                background: #2a2d3e;
+            }
+            .gift-calc-card .calc-result .result-main {
+                color: #c8cce0;
+            }
+            .gift-calc-card .calc-result .result-sub {
+                color: #a0a8c0;
+            }
+            .gift-calc-card .calc-note {
+                color: #8a8ea8;
+            }
+            .gift-calc-card .calc-note span {
+                background: #3e2a1a;
+                color: #ffab40;
+            }
+            .gift-calc-card .result-table th {
+                color: #a0a8c0;
+                border-bottom-color: #3a3d50;
+            }
+            .gift-calc-card .result-table td {
+                color: #c8cce0;
+            }
+            .gift-calc-card .result-table .cost-col {
+                color: #ef5350;
+            }
+            .gift-calc-card .result-table .optimal-row {
+                background: #1a3a2a;
+            }
+            .gift-calc-card .result-table .optimal-row td {
+                font-weight: 700;
+                color: #81c784;
+            }
         }
     </style>
 </head>
@@ -1189,6 +1339,39 @@
                 </thead>
                 <tbody id="tbody"></tbody>
             </table>
+        </div>
+
+        <!-- ===== 补礼物计算 ===== -->
+        <div class="card gift-calc-card">
+            <h3>📦 补礼物计算</h3>
+            <div class="calc-row">
+                <div class="calc-field">
+                    <label for="gcChar">角色</label>
+                    <select id="gcChar"></select>
+                </div>
+                <div class="calc-field">
+                    <label for="gcLevel">当前等级</label>
+                    <select id="gcLevel">
+                        <option value="0">0 级</option>
+                        <option value="1">1 级</option>
+                        <option value="2">2 级</option>
+                        <option value="3">3 级</option>
+                        <option value="4">4 级</option>
+                        <option value="5">5 级</option>
+                        <option value="6">6 级</option>
+                        <option value="7">7 级</option>
+                        <option value="8">8 级</option>
+                        <option value="9">9 级</option>
+                    </select>
+                </div>
+                <div class="calc-field">
+                    <label for="gcExp">当前经验</label>
+                    <input type="number" id="gcExp" value="0" min="0" step="1">
+                </div>
+            </div>
+            <div class="calc-result" id="gcResult">
+                <div class="result-sub">请选择角色和等级后查看计算结果</div>
+            </div>
         </div>
 
     </div>
@@ -2134,6 +2317,131 @@
         darkModeQuery.addEventListener('change', function() {
             update();
         });
+
+        /* ============================================================
+           14. 补礼物计算
+           ============================================================ */
+        const LEVEL_XP = [100, 500, 1000, 2000, 3500, 5000, 7000, 9000, 12000, 16000];
+        const CUMULATIVE_XP = (() => {
+            const cum = [0];
+            for (let i = 0; i < LEVEL_XP.length; i++) {
+                cum.push(cum[i] + LEVEL_XP[i]);
+            }
+            return cum; // CUMULATIVE_XP[lv] = total XP needed to reach level lv
+        })();
+        const MAX_XP = CUMULATIVE_XP[10]; // 56100 total to reach level 10
+
+        const gcChar = document.getElementById('gcChar');
+        const gcLevel = document.getElementById('gcLevel');
+        const gcExp = document.getElementById('gcExp');
+        const gcResult = document.getElementById('gcResult');
+
+        function initGiftCalc() {
+            // Populate character select
+            model.forEach((r, i) => {
+                const opt = document.createElement('option');
+                opt.value = i;
+                opt.textContent = r.name;
+                gcChar.appendChild(opt);
+            });
+            updateGiftCalc();
+        }
+
+        function updateGiftCalc() {
+            const charIdx = parseInt(gcChar.value);
+            const currentLv = parseInt(gcLevel.value);
+            const xpForCurrentLv = LEVEL_XP[currentLv];
+            // Update max on exp input
+            gcExp.max = xpForCurrentLv;
+            const currentExp = Math.min(parseInt(gcExp.value) || 0, xpForCurrentLv);
+            const r = model[charIdx];
+
+            if (!r) {
+                gcResult.innerHTML = '<div class="result-sub">请选择角色</div>';
+                return;
+            }
+
+            // XP already earned in current level
+            const effectiveExp = currentExp;
+            // Remaining XP: from current level remaining to level 10
+            const remainingInCurrent = Math.max(0, xpForCurrentLv - effectiveExp);
+            const remainingAfterCurrent = MAX_XP - CUMULATIVE_XP[currentLv + 1];
+            const remainingTotal = remainingInCurrent + Math.max(0, remainingAfterCurrent);
+
+            if (remainingTotal <= 0) {
+                gcResult.innerHTML = '<div class="result-main">✅ 已满级！当前角色已达到 10 级。</div>';
+                return;
+            }
+
+            // 阶梯式计算：9级以下部分享受+5%加成，9级及以上部分按基础值
+            let xpBelow9 = 0;  // 9级以下（享受+5%加成）
+            let xpAbove9 = 0;  // 9级及以上（基础值）
+
+            if (currentLv < 9) {
+                // 当前等级剩余经验（当前等级 < 9，享受加成）
+                xpBelow9 += remainingInCurrent;
+                // 当前等级+1 到 8 级的经验
+                for (let lv = currentLv + 1; lv < 9 && lv < 10; lv++) {
+                    xpBelow9 += LEVEL_XP[lv];
+                }
+                // 9级到10级的经验（不享受加成）
+                for (let lv = Math.max(9, currentLv + 1); lv < 10; lv++) {
+                    xpAbove9 += LEVEL_XP[lv];
+                }
+            } else {
+                // 当前等级 >= 9，全部不享受加成
+                xpAbove9 = remainingTotal;
+            }
+
+            // 读取上方方案：根据当前阈值 T 确定最优礼物档次
+            const optimalTier = choose(r, currentT);
+
+            let html = '';
+            if (xpBelow9 > 0) {
+                html += `<div class="result-sub">✨ ≤8级部分 ${formatNumber(xpBelow9)} 经验享受 +5% 好感(可能有一个礼物的误差)</div>`;
+            }
+            const tiers = [
+                { tier: 100, favorBonus: 105, favorBase: 100, price: r.c100, name: r.name100 },
+                { tier: 200, favorBonus: 210, favorBase: 200, price: r.c200, name: r.name200 },
+                { tier: 400, favorBonus: 420, favorBase: 400, price: r.c400, name: r.name400 },
+            ];
+            const t = tiers.find(t => t.tier === optimalTier);
+            const countBonus = xpBelow9 > 0 ? Math.ceil(xpBelow9 / t.favorBonus) : 0;
+            const countBase = xpAbove9 > 0 ? Math.ceil(xpAbove9 / t.favorBase) : 0;
+            const count = countBonus + countBase;
+            const totalCost = count * t.price;
+
+            html += `<table class="result-table">`;
+            html += `<thead><tr><th>角色</th><th>推荐值</th><th>地点</th><th>礼物名</th><th>总礼物</th><th>总方斯</th></tr></thead><tbody>`;
+            html += `<tr>`;
+            html += `<td>${r.name}</td>`;
+            html += `<td>${t.tier}</td>`;
+            html += `<td>${getLocation(r, t.tier)}</td>`;
+            html += `<td>${t.name}</td>`;
+            html += `<td>${count}</td>`;
+            html += `<td class="cost-col">${formatNumber(totalCost)}</td>`;
+            html += `</tr>`;
+            html += `</tbody></table>`;
+
+            gcResult.innerHTML = html;
+        }
+
+        gcChar.addEventListener('change', updateGiftCalc);
+        gcLevel.addEventListener('change', updateGiftCalc);
+        gcExp.addEventListener('input', updateGiftCalc);
+
+        // Initialize after model is ready
+        const _origUpdate = update;
+        update = function() {
+            _origUpdate();
+            if (gcChar.options.length === 0) initGiftCalc();
+            else updateGiftCalc();
+        };
+
+        // Also init on first load
+        if (typeof model !== 'undefined' && model.length > 0) {
+            initGiftCalc();
+        }
     </script>
 
 </body>
